@@ -28,6 +28,14 @@ Install:
 * [Liberica JDK 17 Full](https://bell-sw.com/pages/downloads/#jdk-17-lts), which includes the
   JavaFX runtime required by the desktop simulator
 
+On Windows, install all three prerequisites with WinGet:
+
+```text
+winget install --exact --id Git.Git --accept-package-agreements --accept-source-agreements
+winget install --exact --id Google.AndroidStudio --accept-package-agreements --accept-source-agreements
+winget install --exact --id BellSoft.LibericaJDK.17.Full --accept-package-agreements --accept-source-agreements
+```
+
 ### Cloning and Updating the Submodule
 
 Clone the repository and its submodule together:
