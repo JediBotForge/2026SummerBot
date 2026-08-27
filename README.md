@@ -82,6 +82,17 @@ virtual gamepad. Connect one or two gamepads before launching the simulator. Aft
 press **Start+A** on the controller to assign it to gamepad 1, or **Start+B** to assign it to
 gamepad 2.
 
+To switch input modes, edit `Simulator/src/main/java/local_simulator_config/Config.java` and
+change this setting:
+
+```java
+public static final boolean USE_VIRTUAL_GAMEPAD = false;
+```
+
+Use `false` for physical gamepads or `true` for the on-screen virtual gamepad. Restart the
+simulator after changing the setting. This root-project configuration overrides the corresponding
+file in the `virtual_robot` submodule, so do not edit the submodule to change gamepad mode.
+
 ### Building and Deploying to a Control Hub
 
 Use the Android Studio `FtcRobotController` run configuration to build, install, and launch the
