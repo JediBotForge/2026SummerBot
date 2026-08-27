@@ -6,34 +6,72 @@ This repository contains the public FTC SDK for the DECODE (2025-2026) competiti
 This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition robot.  To use this SDK, download/clone the entire project to your local computer.
 
 ## Requirements
-To use this Android Studio project, you will need Android Studio Ladybug (2024.2) or later.
+To use this Android Studio project, you will need Android Studio Narwhal 3 Feature Drop
+(2025.1.3) or later.
 
 To program your robot in Blocks or OnBot Java, you do not need Android Studio.
 
 ## Desktop Simulator
 
 This project includes a desktop simulator target backed by the pinned
-[`virtual_robot`](https://github.com/Beta8397/virtual_robot) submodule. Initialize submodules
-after cloning:
+[`virtual_robot`](https://github.com/Beta8397/virtual_robot) submodule. It uses the same
+`TeamCode/src/main/java` source tree as the Android application, but uses a separate FTC SDK
+implementation.
+
+### Prerequisites
+
+Install:
+
+* Git, with access to GitHub
+* Android Studio Narwhal 3 Feature Drop (2025.1.3) or later for the Android Robot Controller
+  build and deployment workflow
+* [Liberica JDK 17 Full](https://bell-sw.com/pages/downloads/#jdk-17-lts), which includes the
+  JavaFX runtime required by the desktop simulator
+
+### Cloning and Updating the Submodule
+
+Clone the repository and its submodule together:
+
+```text
+git clone --recurse-submodules https://github.com/JediBotForge/2026SummerBot.git
+cd 2026SummerBot
+```
+
+For an existing clone, or after pulling a revision that changes the pinned submodule commit,
+initialize the submodule at the version recorded by this repository:
 
 ```text
 git submodule update --init --recursive
 ```
 
-Install Liberica JDK 17 Full, which includes JavaFX. The simulator and the Android application
-both compile the same `TeamCode/src/main/java` source tree, but use separate FTC SDK
-implementations.
+To intentionally advance the pinned `virtual_robot` version, update its `master` branch, test
+the simulator, then commit the updated submodule pointer in this repository:
+
+```text
+git -C third_party/virtual_robot fetch origin
+git -C third_party/virtual_robot switch master
+git -C third_party/virtual_robot pull --ff-only origin master
+git add third_party/virtual_robot
+git commit -m "Update virtual_robot submodule"
+```
+
+### Running the Desktop Simulator
 
 In Android Studio, use the Gradle tool window to run
 `Simulator > Tasks > application > run`, or run:
 
 ```text
-./gradlew :Simulator:run
+.\gradlew.bat :Simulator:run
 ```
 
 Choose `StarterBot Chassis` or `StarterBot Mecanum` from the simulator Configuration dropdown
-before selecting the matching OpMode. Use the standard Android `FtcRobotController` run
-configuration to build and deploy to a REV Control Hub through ADB.
+before selecting the matching OpMode.
+
+### Building and Deploying to a Control Hub
+
+Use the Android Studio `FtcRobotController` run configuration to build, install, and launch the
+Android Robot Controller app on a REV Control Hub connected through ADB. This is separate from
+the `Simulator` run configuration, which only launches the desktop simulator.
 
 ## Getting Started
 If you are new to robotics or new to the *FIRST* Tech Challenge, then you should consider reviewing the [FTC Blocks Tutorial](https://ftc-docs.firstinspires.org/programming_resources/blocks/Blocks-Tutorial.html) to get familiar with how to use the control system:
