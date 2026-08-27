@@ -43,6 +43,8 @@ public class StarterBotChassisTeleop extends OpMode {
     // Declare OpMode members.
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
+    private DcMotor leftFrontDrive = null;
+    private DcMotor rightFrontDrive = null;
     private DcMotor intake = null;
     private CRServo leftIntakeServo = null;
     private CRServo rightIntakeServo = null;
@@ -67,9 +69,11 @@ public class StarterBotChassisTeleop extends OpMode {
          */
         leftDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        intake = hardwareMap.tryGet(DcMotor.class, "intake");
-        leftIntakeServo = hardwareMap.tryGet(CRServo.class, "left_intake_servo");
-        rightIntakeServo = hardwareMap.tryGet(CRServo.class, "right_intake_servo");
+        leftFrontDrive = HardwareMapUtil.getOptional(hardwareMap, DcMotor.class, "left_front_drive");
+        rightFrontDrive = HardwareMapUtil.getOptional(hardwareMap, DcMotor.class, "right_front_drive");
+        intake = HardwareMapUtil.getOptional(hardwareMap, DcMotor.class, "intake");
+        leftIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "left_intake_servo");
+        rightIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -88,6 +92,14 @@ public class StarterBotChassisTeleop extends OpMode {
          */
         leftDrive.setZeroPowerBehavior(BRAKE);
         rightDrive.setZeroPowerBehavior(BRAKE);
+        if (leftFrontDrive != null) {
+            leftFrontDrive.setPower(0);
+            leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
+        if (rightFrontDrive != null) {
+            rightFrontDrive.setPower(0);
+            rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
         if (intake != null) {
             intake.setZeroPowerBehavior(BRAKE);
         }
@@ -144,7 +156,7 @@ public class StarterBotChassisTeleop extends OpMode {
          * both motors work to rotate the robot. Combinations of these inputs can be used to create
          * more complex maneuvers.
          */
-        arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+        arcadeDrive(HardwareMapUtil.forwardInput(gamepad1.left_stick_y), -gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.

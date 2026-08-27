@@ -72,8 +72,9 @@ In Android Studio, use the Gradle tool window to run
 .\gradlew.bat :Simulator:run
 ```
 
-Choose `StarterBot Chassis` or `StarterBot Mecanum` from the simulator Configuration dropdown
-before selecting the matching OpMode.
+Choose `StarterBot` from the simulator Configuration dropdown before selecting either
+StarterBot TeleOp. The single simulator profile exposes the four shared drive motor names
+used by both TeleOps.
 
 ### Using Physical Gamepads
 

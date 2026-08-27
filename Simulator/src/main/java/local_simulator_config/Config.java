@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import virtual_robot.controller.Game;
 import virtual_robot.controller.VirtualBot;
 import virtual_robot.games.Decode;
-import virtual_robot.robots.classes.StarterBotChassisSim;
+import virtual_robot.robots.classes.StarterBotMecanumSim;
 
 /**
  * Root-project override of virtual_robot's Config. The file is intentionally outside the standard
@@ -34,5 +34,5 @@ public class Config {
 
     public static final MotorType DEFAULT_DRIVE_MOTOR_TYPE = MotorType.Gobilda192;
 
-    public static final Class<? extends VirtualBot> DEFAULT_BOT = StarterBotChassisSim.class;
+    public static final Class<? extends VirtualBot> DEFAULT_BOT = StarterBotMecanumSim.class;
 }

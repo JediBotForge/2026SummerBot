@@ -80,9 +80,9 @@ public class StarterBotMecChassisTeleop extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        intake = hardwareMap.tryGet(DcMotor.class, "intake");
-        leftIntakeServo = hardwareMap.tryGet(CRServo.class, "left_intake_servo");
-        rightIntakeServo = hardwareMap.tryGet(CRServo.class, "right_intake_servo");
+        intake = HardwareMapUtil.getOptional(hardwareMap, DcMotor.class, "intake");
+        leftIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "left_intake_servo");
+        rightIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -160,10 +160,11 @@ public class StarterBotMecChassisTeleop extends OpMode {
          * right way to create a sideways "strafe" movement. Combinations of these inputs can be used to create
          * more complex maneuvers.
          *
-         * The drive input is passed through with its native sign because this robot's motor
-         * orientation makes the standard joystick inversion drive the robot backward.
+         * Apply the standard simulator joystick convention while preserving the real robot's
+         * motor orientation convention.
          */
-        mecanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        mecanumDrive(HardwareMapUtil.forwardInput(gamepad1.left_stick_y),
+                gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
