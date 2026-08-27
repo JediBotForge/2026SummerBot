@@ -28,7 +28,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /*
@@ -66,11 +65,11 @@ public class StarterBotChassisTeleop extends OpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step.
          */
-        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
-        leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
-        rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
+        leftDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
+        rightDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        intake = hardwareMap.tryGet(DcMotor.class, "intake");
+        leftIntakeServo = hardwareMap.tryGet(CRServo.class, "left_intake_servo");
+        rightIntakeServo = hardwareMap.tryGet(CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -79,8 +78,8 @@ public class StarterBotChassisTeleop extends OpMode {
          * Note: The settings here assume direct drive on left and right wheels. Gear
          * Reduction or 90 Deg drives may require direction flips
          */
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -89,19 +88,27 @@ public class StarterBotChassisTeleop extends OpMode {
          */
         leftDrive.setZeroPowerBehavior(BRAKE);
         rightDrive.setZeroPowerBehavior(BRAKE);
-        intake.setZeroPowerBehavior(BRAKE);
+        if (intake != null) {
+            intake.setZeroPowerBehavior(BRAKE);
+        }
 
         /*
          * set Feeders to an initial value to initialize the servo controller
          */
-        leftIntakeServo.setPower(0);
-        rightIntakeServo.setPower(0);
+        if (leftIntakeServo != null) {
+            leftIntakeServo.setPower(0);
+        }
+        if (rightIntakeServo != null) {
+            rightIntakeServo.setPower(0);
+        }
 
         /*
          * Much like our drivetrain motors, we set the right intake servo to reverse so that both
          * servos work to pull elements into the intake.
          */
-        rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        if (rightIntakeServo != null) {
+            rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        }
 
         /*
          * Tell the driver that initialization is complete.
@@ -137,7 +144,7 @@ public class StarterBotChassisTeleop extends OpMode {
          * both motors work to rotate the robot. Combinations of these inputs can be used to create
          * more complex maneuvers.
          */
-        arcadeDrive(-gamepad1.left_stick_y, gamepad1.right_stick_x);
+        arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -153,9 +160,15 @@ public class StarterBotChassisTeleop extends OpMode {
          */
         intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
 
-        intake.setPower(intakePower);
-        leftIntakeServo.setPower(intakePower);
-        rightIntakeServo.setPower(intakePower);
+        if (intake != null) {
+            intake.setPower(intakePower);
+        }
+        if (leftIntakeServo != null) {
+            leftIntakeServo.setPower(intakePower);
+        }
+        if (rightIntakeServo != null) {
+            rightIntakeServo.setPower(intakePower);
+        }
 
         /*
          * Show motor powers on the Driver Station via telemetry.

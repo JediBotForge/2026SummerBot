@@ -35,7 +35,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /*
@@ -81,9 +80,9 @@ public class StarterBotMecChassisTeleop extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
-        leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
-        rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
+        intake = hardwareMap.tryGet(DcMotor.class, "intake");
+        leftIntakeServo = hardwareMap.tryGet(CRServo.class, "left_intake_servo");
+        rightIntakeServo = hardwareMap.tryGet(CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -106,19 +105,27 @@ public class StarterBotMecChassisTeleop extends OpMode {
         rightFrontDrive.setZeroPowerBehavior(BRAKE);
         leftBackDrive.setZeroPowerBehavior(BRAKE);
         rightBackDrive.setZeroPowerBehavior(BRAKE);
-        intake.setZeroPowerBehavior(BRAKE);
+        if (intake != null) {
+            intake.setZeroPowerBehavior(BRAKE);
+        }
 
         /*
          * set Feeders to an initial value to initialize the servo controller
          */
-        leftIntakeServo.setPower(0);
-        rightIntakeServo.setPower(0);
+        if (leftIntakeServo != null) {
+            leftIntakeServo.setPower(0);
+        }
+        if (rightIntakeServo != null) {
+            rightIntakeServo.setPower(0);
+        }
 
         /*
          * Much like our drivetrain motors, we set the right intake servo to reverse so that both
          * servos work to pull elements into the intake.
          */
-        rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        if (rightIntakeServo != null) {
+            rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        }
 
         /*
          * Tell the driver that initialization is complete.
@@ -153,10 +160,10 @@ public class StarterBotMecChassisTeleop extends OpMode {
          * right way to create a sideways "strafe" movement. Combinations of these inputs can be used to create
          * more complex maneuvers.
          *
-         * Note, moving the joystick forward on most gamepads results in a negative signal, so we invert it before
-         * passing it to the function.
+         * The drive input is passed through with its native sign because this robot's motor
+         * orientation makes the standard joystick inversion drive the robot backward.
          */
-        mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        mecanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -171,15 +178,24 @@ public class StarterBotMecChassisTeleop extends OpMode {
          */
         intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
 
-        intake.setPower(intakePower);
-        leftIntakeServo.setPower(intakePower);
-        rightIntakeServo.setPower(intakePower);
+        if (intake != null) {
+            intake.setPower(intakePower);
+        }
+        if (leftIntakeServo != null) {
+            leftIntakeServo.setPower(intakePower);
+        }
+        if (rightIntakeServo != null) {
+            rightIntakeServo.setPower(intakePower);
+        }
 
         /*
          * Show motor powers on the Driver Station via telemetry.
          */
         telemetry.addData("Motors", "FL (%.2f), FR (%.2f), BL(%.2f), BR(%.2f)",
                 leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
+        telemetry.addData("Motor commands", "port 2 FL (%.2f), port 3 FR (%.2f), port 0 BL (%.2f), port 1 BR (%.2f)",
+                leftFrontDrive.getPower(), rightFrontDrive.getPower(),
+                leftBackDrive.getPower(), rightBackDrive.getPower());
         telemetry.addData("Triggers", "left (%.2f, right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
 
     }
