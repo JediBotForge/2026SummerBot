@@ -10,6 +10,31 @@ To use this Android Studio project, you will need Android Studio Ladybug (2024.2
 
 To program your robot in Blocks or OnBot Java, you do not need Android Studio.
 
+## Desktop Simulator
+
+This project includes a desktop simulator target backed by the pinned
+[`virtual_robot`](https://github.com/Beta8397/virtual_robot) submodule. Initialize submodules
+after cloning:
+
+```text
+git submodule update --init --recursive
+```
+
+Install Liberica JDK 17 Full, which includes JavaFX. The simulator and the Android application
+both compile the same `TeamCode/src/main/java` source tree, but use separate FTC SDK
+implementations.
+
+In Android Studio, use the Gradle tool window to run
+`Simulator > Tasks > application > run`, or run:
+
+```text
+./gradlew :Simulator:run
+```
+
+Choose `StarterBot Chassis` or `StarterBot Mecanum` from the simulator Configuration dropdown
+before selecting the matching OpMode. Use the standard Android `FtcRobotController` run
+configuration to build and deploy to a REV Control Hub through ADB.
+
 ## Getting Started
 If you are new to robotics or new to the *FIRST* Tech Challenge, then you should consider reviewing the [FTC Blocks Tutorial](https://ftc-docs.firstinspires.org/programming_resources/blocks/Blocks-Tutorial.html) to get familiar with how to use the control system:
 

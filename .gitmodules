@@ -1,0 +1,3 @@
+[submodule "third_party/virtual_robot"]
+	path = third_party/virtual_robot
+	url = https://github.com/Beta8397/virtual_robot.git

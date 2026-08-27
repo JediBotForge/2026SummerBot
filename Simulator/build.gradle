@@ -1,0 +1,39 @@
+plugins {
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.BELLSOFT
+    }
+}
+
+application {
+    mainClass = 'virtual_robot.controller.VirtualRobotApplication'
+    applicationDefaultJvmArgs = ['--add-modules=javafx.controls,javafx.fxml']
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                    '../third_party/virtual_robot/Controller/src',
+                    '../third_party/virtual_robot/TeamCode/src',
+                    '../TeamCode/src/main/java',
+                    'src/main/java'
+            ]
+        }
+        resources {
+            srcDirs = [
+                    '../third_party/virtual_robot/Controller/src',
+                    'src/main/resources'
+            ]
+            exclude '**/*.java'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: '../third_party/virtual_robot/lib', include: ['*.jar'])
+}
