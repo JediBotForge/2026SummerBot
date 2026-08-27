@@ -75,6 +75,13 @@ In Android Studio, use the Gradle tool window to run
 Choose `StarterBot Chassis` or `StarterBot Mecanum` from the simulator Configuration dropdown
 before selecting the matching OpMode.
 
+### Using Physical Gamepads
+
+The simulator is configured for physical USB or Bluetooth gamepads rather than its on-screen
+virtual gamepad. Connect one or two gamepads before launching the simulator. After it starts,
+press **Start+A** on the controller to assign it to gamepad 1, or **Start+B** to assign it to
+gamepad 2.
+
 ### Building and Deploying to a Control Hub
 
 Use the Android Studio `FtcRobotController` run configuration to build, install, and launch the

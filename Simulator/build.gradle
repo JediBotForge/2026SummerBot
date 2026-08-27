@@ -23,6 +23,7 @@ sourceSets {
                     '../TeamCode/src/main/java',
                     'src/main/java'
             ]
+            exclude 'virtual_robot/config/Config.java'
         }
         resources {
             srcDirs = [
