@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorExImpl;
 import com.qualcomm.robotcore.hardware.configuration.MotorType;
 
 import virtual_robot.controller.BotConfig;
-@BotConfig(name = "StarterBot Chassis", filename = "starterbot_chassis")
+@BotConfig(name = "Stryker: StarterBot Chassis", filename = "starterbot_chassis")
 public class StarterBotChassisSim extends TwoWheelPhysicsBase {
     @Override
     protected void createHardwareMap() {

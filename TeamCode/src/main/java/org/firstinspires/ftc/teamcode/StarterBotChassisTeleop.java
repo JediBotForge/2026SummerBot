@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  * one motor driving an intake roller, and two servos which pull elements out of corners.
  */
 
-@TeleOp(name = "StarterBot Chassis Teleop", group = "StarterBot")
+@TeleOp(name = "Stryker: StarterBot Chassis Teleop", group = "StarterBot")
 //@Disabled
 public class StarterBotChassisTeleop extends OpMode {
 

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorExImpl;
 
 import virtual_robot.controller.BotConfig;
-@BotConfig(name = "StarterBot Mecanum", filename = "starterbot_mecanum")
+@BotConfig(name = "Stryker: StarterBot Mecanum", filename = "starterbot_mecanum")
 public class StarterBotMecanumSim extends MecanumPhysicsBase {
     @Override
     protected void createHardwareMap() {

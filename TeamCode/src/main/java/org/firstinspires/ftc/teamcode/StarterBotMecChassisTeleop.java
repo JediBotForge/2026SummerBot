@@ -44,7 +44,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  * robot mobility, one motor driving an intake roller, and two servos which pull elements out of corners.
  */
 
-@TeleOp(name = "StarterBot Mecanum Chassis Teleop", group = "StarterBot")
+@TeleOp(name = "Stryker: StarterBot Mecanum Chassis Teleop", group = "StarterBot")
 //@Disabled
 public class StarterBotMecChassisTeleop extends OpMode {
 
