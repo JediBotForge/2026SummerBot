@@ -1,0 +1,42 @@
+package org.firstinspires.ftc.teamcode.teaching.session1;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.teamcode.HardwareMapUtil;
+
+@TeleOp(name = "Teaching S1 Solution - 4x4 Tank", group = "Teaching S1")
+public class TankSolutionTeleOp extends OpMode {
+    private DcMotor leftFrontDrive, rightFrontDrive, leftBackDrive, rightBackDrive;
+
+    @Override
+    public void init() {
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        for (DcMotor motor : new DcMotor[] {leftFrontDrive, rightFrontDrive, leftBackDrive, rightBackDrive}) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+    }
+
+    @Override
+    public void loop() {
+        double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
+        double rotate = gamepad1.right_stick_x;
+        double left = forward + rotate;
+        double right = forward - rotate;
+        setSide(left, leftFrontDrive, leftBackDrive);
+        setSide(right, rightFrontDrive, rightBackDrive);
+        telemetry.addData("4x4 tank", "left %.2f | right %.2f", left, right);
+    }
+
+    private void setSide(double power, DcMotor front, DcMotor rear) {
+        front.setPower(power);
+        rear.setPower(power);
+    }
+}

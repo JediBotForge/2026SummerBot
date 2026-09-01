@@ -1,0 +1,187 @@
+:root {
+  color-scheme: light;
+  --ink: #17202a;
+  --muted: #5f6b76;
+  --accent: #0b6e99;
+  --accent-dark: #084c6b;
+  --warm: #f2b134;
+  --paper: #fffdf8;
+  --panel: #ffffff;
+  --soft: #eef7fa;
+  --line: #d8e4e8;
+  --shadow: 0 16px 45px rgba(23, 32, 42, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 17px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(135deg, #f5fbfc 0%, var(--paper) 45%);
+}
+
+a { color: var(--accent-dark); }
+a:hover { color: var(--accent); }
+
+.site-header {
+  padding: 3.5rem 1.25rem 2.5rem;
+  color: #fff;
+  background: linear-gradient(120deg, #063b54, var(--accent));
+}
+
+.header-inner, main {
+  width: min(1120px, calc(100% - 2.5rem));
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 .5rem;
+  color: #c5eef7;
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.site-header h1 { max-width: 760px; margin: 0; color: #fff; }
+.site-header p { max-width: 680px; margin: .85rem 0 0; color: #e0f4f7; }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem 1.1rem;
+  margin-top: 1.6rem;
+}
+
+.site-nav a {
+  color: #fff;
+  font-size: .94rem;
+  font-weight: 650;
+  text-decoration: none;
+  opacity: .9;
+}
+
+.site-nav a:hover { opacity: 1; text-decoration: underline; }
+
+main {
+  padding: 2.5rem 0 4rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 2rem;
+  align-items: start;
+}
+
+article, .card, .toc {
+  background: rgba(255, 255, 255, .88);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+article { padding: clamp(1.4rem, 3vw, 2.8rem); }
+.card { padding: 1.35rem; }
+.toc { position: sticky; top: 1.25rem; padding: 1rem 1.15rem; }
+
+.toc h2 { margin-top: 0; font-size: 1rem; }
+.toc ol, .toc ul { margin: 0; padding-left: 1.2rem; }
+.toc li { margin: .45rem 0; }
+.toc a { text-decoration: none; }
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.lesson-nav a {
+  max-width: 48%;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lesson-nav a:last-child { text-align: right; }
+
+h1, h2, h3 { line-height: 1.2; color: var(--accent-dark); }
+h1 { margin-top: 0; font-size: clamp(2rem, 4vw, 3.25rem); }
+h2 { margin-top: 2rem; }
+h3 { margin-top: 1.45rem; }
+
+.lede { color: var(--muted); font-size: 1.12rem; }
+.meta { color: var(--muted); font-size: .92rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.card h2, .card h3 { margin-top: 0; }
+.card p:last-child { margin-bottom: 0; }
+
+.tag {
+  display: inline-block;
+  margin-bottom: .8rem;
+  padding: .2rem .6rem;
+  border-radius: 99px;
+  color: var(--accent-dark);
+  background: #dff3f7;
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.tip {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 5px solid var(--warm);
+  border-radius: 0 12px 12px 0;
+  background: #fff7df;
+}
+
+code {
+  padding: .12em .35em;
+  border-radius: 5px;
+  background: #edf1f2;
+  font-size: .92em;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 10px;
+  color: #eaf7fa;
+  background: #162c38;
+}
+
+th, td { padding: .65rem .8rem; border-bottom: 1px solid var(--line); text-align: left; }
+th { color: var(--accent-dark); background: var(--soft); }
+table { width: 100%; border-collapse: collapse; }
+
+footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  .toc { position: static; order: -1; }
+  .site-header { padding-top: 2.4rem; }
+}
+
+@media print {
+  body { background: #fff; }
+  .site-header { padding: 1rem 0; color: #000; background: #fff; border-bottom: 2px solid #000; }
+  .site-header h1, .site-header p, .site-nav a { color: #000; }
+  article, .card, .toc { box-shadow: none; }
+}

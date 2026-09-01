@@ -6,8 +6,7 @@ This repository contains the public FTC SDK for the DECODE (2025-2026) competiti
 This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition robot.  To use this SDK, download/clone the entire project to your local computer.
 
 ## Requirements
-To use this Android Studio project, you will need Android Studio Narwhal 3 Feature Drop
-(2025.1.3) or later.
+To use this Android Studio project, you will need Android Studio Panda or later.
 
 To program your robot in Blocks or OnBot Java, you do not need Android Studio.
 
@@ -23,7 +22,7 @@ implementation.
 Install:
 
 * Git, with access to GitHub
-* Android Studio Narwhal 3 Feature Drop (2025.1.3) or later for the Android Robot Controller
+* Android Studio Panda or later for the Android Robot Controller
   build and deployment workflow
 * [Liberica JDK 17 Full](https://bell-sw.com/pages/downloads/#jdk-17-lts), which includes the
   JavaFX runtime required by the desktop simulator
@@ -99,6 +98,24 @@ file in the `virtual_robot` submodule, so do not edit the submodule to change ga
 Use the Android Studio `FtcRobotController` run configuration to build, install, and launch the
 Android Robot Controller app on a REV Control Hub connected through ADB. This is separate from
 the `Simulator` run configuration, which only launches the desktop simulator.
+
+## Teaching Lessons
+
+The beginner curriculum is in [`teaching/index.html`](teaching/index.html). It contains the
+session table of contents, lessons, simulator and configuration references, and instructor notes.
+The corresponding isolated teaching OpModes are under
+`TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teaching/`.
+
+The lessons are static HTML files and do not require Gradle or a web server. From the repository
+root, open the course map in the default browser with:
+
+```powershell
+Start-Process .\teaching\index.html
+```
+
+Alternatively, in Android Studio, locate `teaching/index.html` in the Project view, right-click
+it, and choose **Open In > Browser**. Use the browser rather than Android Studio's embedded
+preview when presenting lessons or printing references.
 
 ## Getting Started
 If you are new to robotics or new to the *FIRST* Tech Challenge, then you should consider reviewing the [FTC Blocks Tutorial](https://ftc-docs.firstinspires.org/programming_resources/blocks/Blocks-Tutorial.html) to get familiar with how to use the control system:
