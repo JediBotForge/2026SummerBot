@@ -64,12 +64,8 @@ git commit -m "Update virtual_robot submodule"
 
 ### Running the Desktop Simulator
 
-In Android Studio, use the Gradle tool window to run
-`Simulator > Tasks > application > run`, or run:
-
-```text
-.\gradlew.bat :Simulator:run
-```
+In Android Studio, select the **Simulator** run configuration from the toolbar and click the
+green **Run** button.
 
 Choose `StarterBot` from the simulator Configuration dropdown before selecting either
 StarterBot TeleOp. The single simulator profile exposes the four shared drive motor names
