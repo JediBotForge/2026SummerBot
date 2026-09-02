@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "Teaching S2 Exercise - Speed Toggle", group = "Teaching S2")
 public class SpeedToggleExerciseTeleOp extends OpMode {
+    private static final double LESSON_SPEED = 0.5;
     private DcMotor leftFront, rightFront, leftBack, rightBack;
     private boolean slow;
     private boolean wasPressed;
@@ -33,7 +34,7 @@ public class SpeedToggleExerciseTeleOp extends OpMode {
         wasPressed = pressed;
         double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
         double turn = gamepad1.right_stick_x;
-        double scale = slow ? 0.35 : 1.0;
+        double scale = LESSON_SPEED * (slow ? 0.35 : 1.0);
         leftFront.setPower(scale * (forward + turn));
         leftBack.setPower(scale * (forward + turn));
         rightFront.setPower(scale * (forward - turn));

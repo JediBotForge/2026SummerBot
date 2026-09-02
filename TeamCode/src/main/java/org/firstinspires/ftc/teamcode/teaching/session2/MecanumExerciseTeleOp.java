@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "Teaching S2 Exercise - Mecanum", group = "Teaching S2")
 public class MecanumExerciseTeleOp extends OpMode {
+    private static final double LESSON_SPEED = 0.5;
     private DcMotor leftFrontDrive, rightFrontDrive, leftBackDrive, rightBackDrive;
 
     @Override
@@ -31,10 +32,10 @@ public class MecanumExerciseTeleOp extends OpMode {
         double strafe = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
         double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1.0);
-        leftFrontDrive.setPower((forward + strafe + rotate) / denominator);
-        rightFrontDrive.setPower((forward - strafe - rotate) / denominator);
-        leftBackDrive.setPower((forward - strafe + rotate) / denominator);
-        rightBackDrive.setPower((forward + strafe - rotate) / denominator);
+        leftFrontDrive.setPower(LESSON_SPEED * (forward + strafe + rotate) / denominator);
+        rightFrontDrive.setPower(LESSON_SPEED * (forward - strafe - rotate) / denominator);
+        leftBackDrive.setPower(LESSON_SPEED * (forward - strafe + rotate) / denominator);
+        rightBackDrive.setPower(LESSON_SPEED * (forward + strafe - rotate) / denominator);
         telemetry.addData("Mecanum", "forward %.2f strafe %.2f turn %.2f", forward, strafe, rotate);
     }
 }

@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "Teaching S1 Solution - 4x4 Tank", group = "Teaching S1")
 public class TankSolutionTeleOp extends OpMode {
+    private static final double LESSON_SPEED = 0.5;
     private DcMotor leftFrontDrive, rightFrontDrive, leftBackDrive, rightBackDrive;
 
     @Override
@@ -28,8 +29,8 @@ public class TankSolutionTeleOp extends OpMode {
     public void loop() {
         double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
         double rotate = gamepad1.right_stick_x;
-        double left = forward + rotate;
-        double right = forward - rotate;
+        double left = LESSON_SPEED * (forward + rotate);
+        double right = LESSON_SPEED * (forward - rotate);
         setSide(left, leftFrontDrive, leftBackDrive);
         setSide(right, rightFrontDrive, rightBackDrive);
         telemetry.addData("4x4 tank", "left %.2f | right %.2f", left, right);

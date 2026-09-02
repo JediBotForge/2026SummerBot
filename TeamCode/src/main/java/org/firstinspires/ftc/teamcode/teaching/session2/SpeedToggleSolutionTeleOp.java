@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "Teaching S2 Solution - Speed Toggle", group = "Teaching S2")
 public class SpeedToggleSolutionTeleOp extends OpMode {
+    private static final double LESSON_SPEED = 0.5;
     private DcMotor lf, rf, lb, rb;
     private boolean slowMode;
     private boolean lastBumper;
@@ -31,7 +32,7 @@ public class SpeedToggleSolutionTeleOp extends OpMode {
             slowMode = !slowMode;
         }
         lastBumper = bumper;
-        double speed = slowMode ? 0.35 : 1.0;
+        double speed = LESSON_SPEED * (slowMode ? 0.35 : 1.0);
         double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
         double turn = gamepad1.right_stick_x;
         setSide(speed * (forward + turn), lf, lb);

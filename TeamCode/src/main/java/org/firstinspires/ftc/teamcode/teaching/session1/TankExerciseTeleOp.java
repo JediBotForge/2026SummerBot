@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "Teaching S1 Exercise - 4x4 Tank", group = "Teaching S1")
 public class TankExerciseTeleOp extends OpMode {
+    private static final double LESSON_SPEED = 0.5;
     private DcMotor leftFrontDrive;
     private DcMotor rightFrontDrive;
     private DcMotor leftBackDrive;
@@ -18,8 +19,8 @@ public class TankExerciseTeleOp extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         setBrake();
@@ -30,8 +31,8 @@ public class TankExerciseTeleOp extends OpMode {
     public void loop() {
         double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
         double rotate = gamepad1.right_stick_x;
-        double left = forward + rotate;
-        double right = forward - rotate;
+        double left = LESSON_SPEED * (forward + rotate);
+        double right = LESSON_SPEED * (forward - rotate);
         leftFrontDrive.setPower(left);
         leftBackDrive.setPower(left);
         rightFrontDrive.setPower(right);
