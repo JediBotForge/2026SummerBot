@@ -28,7 +28,7 @@ public class SpeedToggleExerciseTeleOp extends OpMode {
     @Override
     public void loop() {
         boolean pressed = gamepad1.right_bumper;
-        if (pressed && !wasPressed) {
+        if (pressed) {
             slow = !slow;
         }
         wasPressed = pressed;
