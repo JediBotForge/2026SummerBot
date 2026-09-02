@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
-@TeleOp(name = "Teaching S1 Exercise - 4x4 Tank", group = "Teaching S1")
-public class TankExerciseTeleOp extends OpMode {
+@TeleOp(name = "[S1-01] Workflow", group = "Teaching S1")
+public class S1_01_WorkflowTeleOp extends OpMode {
     private static final double LESSON_SPEED = 0.5;
     private DcMotor leftFrontDrive;
     private DcMotor rightFrontDrive;
@@ -19,12 +19,12 @@ public class TankExerciseTeleOp extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         setBrake();
-        telemetry.addLine("4x4 tank ready: left stick drives, right stick turns.");
+        telemetry.addLine("Ready: INIT ran once. Press START to drive.");
     }
 
     @Override
@@ -33,11 +33,15 @@ public class TankExerciseTeleOp extends OpMode {
         double rotate = gamepad1.right_stick_x;
         double left = LESSON_SPEED * (forward + rotate);
         double right = LESSON_SPEED * (forward - rotate);
-        leftFrontDrive.setPower(left);
-        leftBackDrive.setPower(left);
-        rightFrontDrive.setPower(right);
-        rightBackDrive.setPower(right);
-        telemetry.addData("Tank", "left %.2f  right %.2f", left, right);
+        setSide(left, leftFrontDrive, leftBackDrive);
+        setSide(right, rightFrontDrive, rightBackDrive);
+        telemetry.addData("Drive", "left %.2f | right %.2f", left, right);
+        telemetry.addLine("START moved execution from init() to loop().");
+    }
+
+    private void setSide(double power, DcMotor front, DcMotor rear) {
+        front.setPower(power);
+        rear.setPower(power);
     }
 
     private void setBrake() {

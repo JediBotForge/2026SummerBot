@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
-@TeleOp(name = "Teaching S1 Solution - 4x4 Tank", group = "Teaching S1")
-public class TankSolutionTeleOp extends OpMode {
+@TeleOp(name = "[S1-02] Tank - Solution", group = "Teaching S1")
+public class S1_02_TankSolutionTeleOp extends OpMode {
     private static final double LESSON_SPEED = 0.5;
     private DcMotor leftFrontDrive, rightFrontDrive, leftBackDrive, rightBackDrive;
 
