@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /*
  * This file includes a teleop (driver-controlled) file for the Mecanum Drive goBILDA® StarterBot Base
@@ -80,9 +81,9 @@ public class StarterBotMecChassisTeleop extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        intake = HardwareMapUtil.getOptional(hardwareMap, DcMotor.class, "intake");
-        leftIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "left_intake_servo");
-        rightIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "right_intake_servo");
+        intake = getOptional(hardwareMap, DcMotor.class, "intake");
+        leftIntakeServo = getOptional(hardwareMap, CRServo.class, "left_intake_servo");
+        rightIntakeServo = getOptional(hardwareMap, CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -93,8 +94,8 @@ public class StarterBotMecChassisTeleop extends OpMode {
          */
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -163,7 +164,7 @@ public class StarterBotMecChassisTeleop extends OpMode {
          * Apply the standard simulator joystick convention while preserving the real robot's
          * motor orientation convention.
          */
-        mecanumDrive(HardwareMapUtil.forwardInput(gamepad1.left_stick_y),
+        mecanumDrive(-gamepad1.left_stick_y,
                 gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         /*
@@ -182,6 +183,7 @@ public class StarterBotMecChassisTeleop extends OpMode {
         if (intake != null) {
             intake.setPower(intakePower);
         }
+
         if (leftIntakeServo != null) {
             leftIntakeServo.setPower(intakePower);
         }
@@ -226,5 +228,14 @@ public class StarterBotMecChassisTeleop extends OpMode {
         leftBackDrive.setPower(leftBackPower);
         rightBackDrive.setPower(rightBackPower);
 
+    }
+
+    private static <T> T getOptional(
+            HardwareMap hardwareMap, Class<? extends T> deviceType, String deviceName) {
+        try {
+            return hardwareMap.get(deviceType, deviceName);
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
     }
 }

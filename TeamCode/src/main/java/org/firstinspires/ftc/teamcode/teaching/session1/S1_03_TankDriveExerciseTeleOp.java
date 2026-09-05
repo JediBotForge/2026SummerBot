@@ -29,7 +29,7 @@ public class S1_03_TankDriveExerciseTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
+        double forward = gamepad1.left_stick_y;
         double rotate = gamepad1.right_stick_x;
         double left = LESSON_SPEED * (forward + rotate);
         double right = LESSON_SPEED * (forward - rotate);

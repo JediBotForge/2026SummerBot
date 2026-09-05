@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.teaching.session2;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "[S2-02] Speed toggle - Solution", group = "Teaching S2")
 public class S2_02_SpeedToggleSolutionTeleOp extends OpMode {
@@ -19,7 +18,8 @@ public class S2_02_SpeedToggleSolutionTeleOp extends OpMode {
         lb = hardwareMap.get(DcMotor.class, "left_back_drive");
         rb = hardwareMap.get(DcMotor.class, "right_back_drive");
         lf.setDirection(DcMotor.Direction.REVERSE);
-        lb.setDirection(DcMotor.Direction.REVERSE);
+        lb.setDirection(DcMotor.Direction.FORWARD);
+        rb.setDirection(DcMotor.Direction.REVERSE);
         for (DcMotor motor : new DcMotor[] {lf, rf, lb, rb}) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
@@ -33,7 +33,7 @@ public class S2_02_SpeedToggleSolutionTeleOp extends OpMode {
         }
         lastBumper = bumper;
         double speed = LESSON_SPEED * (slowMode ? 0.35 : 1.0);
-        double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
+        double forward = -gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
         setSide(speed * (forward + turn), lf, lb);
         setSide(speed * (forward - turn), rf, rb);

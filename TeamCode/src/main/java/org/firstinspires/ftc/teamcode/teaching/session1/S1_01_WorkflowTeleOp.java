@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.teaching.session1;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import org.firstinspires.ftc.teamcode.HardwareMapUtil;
 
 @TeleOp(name = "[S1-01] Workflow", group = "Teaching S1")
 public class S1_01_WorkflowTeleOp extends OpMode {
@@ -20,16 +19,16 @@ public class S1_01_WorkflowTeleOp extends OpMode {
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
         setBrake();
         telemetry.addLine("Ready: INIT ran once. Press START to drive.");
     }
 
     @Override
     public void loop() {
-        double forward = HardwareMapUtil.forwardInput(gamepad1.left_stick_y);
+        double forward = -gamepad1.left_stick_y;
         double rotate = gamepad1.right_stick_x;
         double left = LESSON_SPEED * (forward + rotate);
         double right = LESSON_SPEED * (forward - rotate);

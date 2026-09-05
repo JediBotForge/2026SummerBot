@@ -29,6 +29,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /*
  * This file includes a teleop (driver-controlled) file for the goBILDA® StarterBot Chassis/Intake for the
@@ -71,9 +72,9 @@ public class StarterBotChassisTeleop extends OpMode {
         rightDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        intake = HardwareMapUtil.getOptional(hardwareMap, DcMotor.class, "intake");
-        leftIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "left_intake_servo");
-        rightIntakeServo = HardwareMapUtil.getOptional(hardwareMap, CRServo.class, "right_intake_servo");
+        intake = getOptional(hardwareMap, DcMotor.class, "intake");
+        leftIntakeServo = getOptional(hardwareMap, CRServo.class, "left_intake_servo");
+        rightIntakeServo = getOptional(hardwareMap, CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -82,8 +83,8 @@ public class StarterBotChassisTeleop extends OpMode {
          * Note: The settings here assume direct drive on left and right wheels. Gear
          * Reduction or 90 Deg drives may require direction flips
          */
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
 
@@ -152,7 +153,7 @@ public class StarterBotChassisTeleop extends OpMode {
          * both motors work to rotate the robot. Combinations of these inputs can be used to create
          * more complex maneuvers.
          */
-        arcadeDrive(HardwareMapUtil.forwardInput(gamepad1.left_stick_y), gamepad1.right_stick_x);
+        arcadeDrive(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -171,6 +172,7 @@ public class StarterBotChassisTeleop extends OpMode {
         if (intake != null) {
             intake.setPower(intakePower);
         }
+
         if (leftIntakeServo != null) {
             leftIntakeServo.setPower(intakePower);
         }
@@ -204,5 +206,14 @@ public class StarterBotChassisTeleop extends OpMode {
         rightDrive.setPower(rightPower);
         leftFrontDrive.setPower(leftPower);
         rightFrontDrive.setPower(rightPower);
+    }
+
+    private static <T> T getOptional(
+            HardwareMap hardwareMap, Class<? extends T> deviceType, String deviceName) {
+        try {
+            return hardwareMap.get(deviceType, deviceName);
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
     }
 }

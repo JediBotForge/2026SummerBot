@@ -8,6 +8,11 @@ import virtual_robot.controller.BotConfig;
 @BotConfig(name = "Stryker: StarterBot", filename = "starterbot")
 public class StarterBotMecanumSim extends MecanumPhysicsBase {
     @Override
+    protected boolean isWheelMechanicallyReversed(int wheelIndex) {
+        return wheelIndex == 0 || wheelIndex == 3;
+    }
+
+    @Override
     protected void createHardwareMap() {
         super.createHardwareMap();
 
